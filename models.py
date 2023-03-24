@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import os
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///book.sqlite'
@@ -20,19 +20,19 @@ class User(db.Model):
         self.password = password
 
 
-class ToDO(db.Model):
+class ToDo(db.Model):
     __tablename__ = 'to_dos'
 
     todo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    task = db.Column(db.String)
+    name = db.Column(db.String)
     due_date = db.Column(db.Date)
-    complete = db.Column(db.Boolean)
+    completed = db.Column(db.Boolean)
 
     user = db.relationship('User', backref='to_dos')
 
-    def __init__(self, user_id, task, due_date, complete):
+    def __init__(self, user_id, name, due_date, completed):
         self.user_id = user_id
-        self.task = task
+        self.name = name
         self.due_date = due_date
-        self.complete = False
+        self.completed = False
