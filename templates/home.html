@@ -1,3 +1,39 @@
-{% extends 'base.html' %}{% block body %}
-<h1>Hello</h1>
-{% endblock %}
+{% extends 'base.html' %}{% block body %}{%if 'user_email' in session%}
+<h1>Hello {{user.email}}</h1>
+{%else%}
+<div class="create-acc">
+  <section>
+    <h2>Log In</h2>
+    <form class="p-3" action="/login" method="POST">
+      <div class="mb-3 form-floating">
+        <input
+          class="form-control"
+          type="text"
+          name="email"
+          placeholder="Enter Email"
+          id="emailInput"
+        />
+
+        <label class="form-label words" for="emailInput">Enter Email</label>
+      </div>
+      <div class="mb-3 form-floating">
+        <input
+          id="passwordInput"
+          class="form-control"
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          type="password"
+        />
+        <label class="form-label words" for="passwordInput"
+          >Enter Password</label
+        >
+      </div>
+
+      <p>
+        <input class="btn btn-dark" type="submit" />
+      </p>
+    </form>
+    {%endif%} {% endblock %}
+  </section>
+</div>

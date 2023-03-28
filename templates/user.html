@@ -4,26 +4,26 @@
   <form action="/add" method="post">
     <label>Name Of Task</label>
     <input type="text" name="name" />
-    <input type="text" name="due_date" />
+    <input type="datetime-local" name="due_date" />
+    <input type="text" name="user_id" placeholder="{{user_id}}" />
+
     <button type="submit">ADD</button>
   </form>
 </div>
-
-<table>
-  <tbody>
+<div>
     {%for todo in todo_list%}
-    <tr>
-    <td>{{todo.name}}</td>
-    <td>{{todo.due_date}}</td>
-    {%if todo.done == False%}
-    <td>{{todo.due_date}}</td>
-    {%else%}
-    <td>Completed</td>
+    <div class ="card">
+    <p>Task: {{todo.task}}</p>
+    {%if todo.completed == False%}
+    <p>Due Date: {{todo.due_date}}</p>
+    {%elif todo.completed == True%}
+    <p>Completed</p>
     {%endif%}
-  </tbody>
-  <td><a href="/update/{{todo.task_id}}">I Finished!</a></td>
-  <td><a href="/delete/{{todo.task_id}}">Delete</a></td>
+    </div>
+  <button class="btn btn-dark"><a href="/update/{{todo.todo_id}}">I Finished!</a></button>
+  <a href="/delete/{{todo.todo_id}}"><button class="btn btn-primary">Delete</button></a>
+  <a href="/update/{{todo.todo_id}}"><button class="btn btn-primary">Update</button></a>
   </tr>
-</table>
+</div>
 {%endfor%}
-{% endblock %}
+{%endblock%}

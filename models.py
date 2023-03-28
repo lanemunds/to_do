@@ -25,14 +25,14 @@ class ToDo(db.Model):
 
     todo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    name = db.Column(db.String)
-    due_date = db.Column(db.Date)
+    task = db.Column(db.String)
+    due_date = db.Column(db.String)
     completed = db.Column(db.Boolean)
 
     user = db.relationship('User', backref='to_dos')
 
-    def __init__(self, user_id, name, due_date, completed):
+    def __init__(self, user_id, task, due_date):
         self.user_id = user_id
-        self.name = name
+        self.task = task
         self.due_date = due_date
         self.completed = False
