@@ -1,0 +1,36 @@
+form{
+    border: 2px solid   black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px;
+    margin: 5px;
+    width: 20%;
+}
+h1{
+    display: flex;
+    justify-content: center;
+}
+h2{
+    display: flex;
+    justify-content: center;
+}
+.formContainer{
+    display: flex;
+    justify-content: center;
+
+}
+.card{
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem;
+    margin: 1rem;
+}
+.todoContainer{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

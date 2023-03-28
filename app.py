@@ -32,32 +32,64 @@ def user_page(user_id):
     return render_template('user.html', todo_list=todo_list, user = user,user_id= user_id)
 
 
-@app.route('/add', methods=['POST'])
+@app.route('/add', methods=['POST','GET'])
 def add():
+    email = session.get("user_email")
+    user = User.query.filter(User.email == email).first()
+    user_id = user.user_id
     task = request.form.get('name')
-    user_id = request.form.get('user_id')
     due_date = request.form.get('due_date')
 
     new_task = ToDo(task=task, due_date=due_date, user_id = user_id)
     db.session.add(new_task)
     db.session.commit()
-    return redirect('/user/<user_id>')
+    flash('Task Created!')
+    return redirect(url_for('user_page',user_id = user_id))
 
 
-@app.route('/update/<todo_id>')
+@app.route('/update/<todo_id>', methods=['POST'])
 def update(todo_id):
+    email = session.get("user_email")
+    user = User.query.filter(User.email == email).first()
+    todo = ToDo.query.get(todo_id)
+    print(todo_id)
+    task = request.form.get('new_name')
+    print(task)
+    due_date = request.form.get('new_date')
+    print(due_date)
+    todo.task = task
+    todo.due_date= due_date
+    db.session.commit()
+    flash('Task Updated')
+    return redirect(url_for('user_page',user_id = user.user_id))
+
+@app.route('/updates/<todo_id>')
+def update_page(todo_id):
+    email = session.get("user_email")
+    user = User.query.filter(User.email == email).first()
+    todo = ToDo.query.get(todo_id)
+    return render_template('update_task.html', user = user, todo = todo)
+
+@app.route('/complete/<todo_id>')
+def completed(todo_id):
+    email = session.get("user_email")
+    user = User.query.filter(User.email == email).first()
     todo = ToDo.query.get(todo_id)
     todo.completed = not todo.completed
     db.session.commit()
-    return redirect('/')
+    flash('Task Updated')
+    return redirect(url_for('user_page',user_id = user.user_id))
 
 
 @app.route('/delete/<todo_id>')
 def delete(todo_id):
+    email = session.get("user_email")
+    user = User.query.filter(User.email == email).first()
     todo = ToDo.query.get(todo_id)
     db.session.delete(todo)
     db.session.commit()
-    return redirect('/')
+    flash('Task Deleted')
+    return redirect(url_for('user_page',user_id = user.user_id))
 
 
 @ app.route('/create_account')
@@ -93,7 +125,6 @@ def login():
         flash("The email or password you entered was incorrect")
     else:
         session['user_email'] = user.email
-        flash(f"Welcome Back,{user.email}!")
     return redirect('/')
 
 @ app.route("/logout")

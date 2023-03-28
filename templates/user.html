@@ -1,29 +1,51 @@
-{% extends 'base.html' %}{% block body %}
+{% extends 'base.html' %}{% block body %} {%for message in
+get_flashed_messages()%} {{message}} {%endfor%}
 <div>
-  <h1>To Do List</h1>
-  <form action="/add" method="post">
-    <label>Name Of Task</label>
-    <input type="text" name="name" />
-    <input type="datetime-local" name="due_date" />
-    <input type="text" name="user_id" placeholder="{{user_id}}" />
+  <h2>Add Task</h2>
+  <div class="formContainer">
+    <form action="/add" method="post">
+      <input type="text" name="name" placeholder="Name of Task" />
+      <input type="datetime-local" name="due_date" />
 
-    <button type="submit">ADD</button>
-  </form>
+      <button class="btn btn-primary" type="submit">ADD</button>
+    </form>
+  </div>
 </div>
-<div>
-    {%for todo in todo_list%}
-    <div class ="card">
-    <p>Task: {{todo.task}}</p>
-    {%if todo.completed == False%}
+<h2>To Do List</h2>
+<div class="todoContainer">
+  {%for todo in todo_list%} {%if todo.completed == False%}
+  <div class="card col-md-3">
+    <h5 class="card-title">Task: {{todo.task}}</h5>
     <p>Due Date: {{todo.due_date}}</p>
-    {%elif todo.completed == True%}
-    <p>Completed</p>
-    {%endif%}
+    <div>
+      <a href="/complete/{{todo.todo_id}}"
+        ><button class="btn btn-primary">Completed</button></a
+      >
+      <a href="/delete/{{todo.todo_id}}"
+        ><button class="btn btn-primary">Delete</button></a
+      >
+      <a href="/updates/{{todo.todo_id}}"
+        ><button class="btn btn-primary">Update</button></a
+      >
     </div>
-  <button class="btn btn-dark"><a href="/update/{{todo.todo_id}}">I Finished!</a></button>
-  <a href="/delete/{{todo.todo_id}}"><button class="btn btn-primary">Delete</button></a>
-  <a href="/update/{{todo.todo_id}}"><button class="btn btn-primary">Update</button></a>
-  </tr>
+  </div>
+  {%endif%} {%endfor%}
 </div>
-{%endfor%}
+<h2>Completed Tasks</h2>
+<div class="todoContainer">
+  {%for todo in todo_list%} {%if todo.completed == True%}
+  <div class="card col-md-3">
+    <h5 class="card-title">Task: {{todo.task}}</h5>
+    <div class="card-body">
+      <p>Completed</p>
+      <a href="/complete/{{todo.todo_id}}"
+        ><button class="btn btn-primary">Not Completed</button></a
+      >
+      <a href="/delete/{{todo.todo_id}}"
+        ><button class="btn btn-primary">Delete</button></a
+      >
+    </div>
+  </div>
+  {%endif%} {%endfor%}
+</div>
 {%endblock%}

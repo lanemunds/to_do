@@ -1,0 +1,11 @@
+{%extends 'base.html'%}{%block body%}
+<h2>Edit Task</h2>
+<div class="formContainer">
+  <form class action="/update/{{todo.todo_id}}" method="post">
+    <input type="text" name="new_name" value=" {{todo.task}}" />
+    <input type="datetime-local" name="new_date" value="{{todo.due_date}}" />
+
+    <button class="btn btn-primary" type="submit">Update</button>
+  </form>
+</div>
+{%endblock%}
