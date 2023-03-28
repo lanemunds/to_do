@@ -6,7 +6,7 @@ get_flashed_messages()%} {{message}}{%endfor%} {%if 'user_email' in session%}
 {%else%}
 <h1>Please Log In</h1>
 <div class="create-acc">
-  <section>
+  <section class="logIn">
     <div class="formContainer">
       <form class="p-3" action="/login" method="POST">
         <div class="mb-3 form-floating">

@@ -17,7 +17,7 @@ get_flashed_messages()%} {{message}} {%endfor%}
   <div class="card col-md-3">
     <h5 class="card-title">Task: {{todo.task}}</h5>
     <p>Due Date: {{todo.due_date}}</p>
-    <div>
+    <div class = 'btnsContainer'>
       <a href="/complete/{{todo.todo_id}}"
         ><button class="btn btn-primary">Completed</button></a
       >
@@ -38,12 +38,14 @@ get_flashed_messages()%} {{message}} {%endfor%}
     <h5 class="card-title">Task: {{todo.task}}</h5>
     <div class="card-body">
       <p>Completed</p>
+      <div btnsContainer>
       <a href="/complete/{{todo.todo_id}}"
         ><button class="btn btn-primary">Not Completed</button></a
       >
       <a href="/delete/{{todo.todo_id}}"
         ><button class="btn btn-primary">Delete</button></a
       >
+      </div>
     </div>
   </div>
   {%endif%} {%endfor%}
